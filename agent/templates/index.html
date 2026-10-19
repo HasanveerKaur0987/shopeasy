@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="chat-container">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 7h12l-1 13H7L6 7z"/>
+                    <path d="M9 7a3 3 0 0 1 6 0"/>
+                </svg>
+            </div>
+            <div>
+                <h1>ShopEasy</h1>
+                <p><span class="status-dot"></span> Online · A human can also help</p>
+            </div>
+        </header>
+
+        <div id="messages">
+            <div class="day-divider"><span>Today</span></div>
+            <div class="message bot">
+                <div class="sender"><span class="mini-logo">S</span> ShopEasy</div>
+                <div class="text">Hi! 👋 I can track orders, find products, start returns, and answer shipping questions.</div>
+            </div>
+        </div>
+
+        <div id="quick-replies">
+            <button class="quick-reply">Track my order</button>
+            <button class="quick-reply">What do you sell?</button>
+            <button class="quick-reply">Return policy</button>
+            <button class="quick-reply">Shipping cost</button>
+        </div>
+
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Ask a question..." autocomplete="off">
+            <button id="send-button" aria-label="Send">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5"/>
+                    <path d="M5 12l7-7 7 7"/>
+                </svg>
+            </button>
+        </form>
+        <p class="footer-note">AI replies may not be perfect · Orders are checked against our records</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

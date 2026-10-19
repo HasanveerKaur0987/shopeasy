@@ -1,0 +1,253 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #18181b;
+    background-color: #fafafa;
+    /* soft light glow at the top + faint dot grid */
+    background-image:
+        radial-gradient(ellipse at top, rgba(255, 255, 255, 0.9), transparent 60%),
+        radial-gradient(#e4e4e7 1px, transparent 1px);
+    background-size: 100% 100%, 22px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The chat card */
+.chat-container {
+    width: 100%;
+    max-width: 440px;
+    height: 700px;
+    margin: 24px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid #e4e4e7;
+    border-radius: 24px;
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 24px 48px -12px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0f0f1;
+    background: linear-gradient(to bottom, #ffffff, #fcfcfc);
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #3f3f46, #18181b);   /* subtle depth */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(24, 24, 27, 0.25);
+}
+
+header h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+
+header p {
+    margin: 3px 0 0;
+    font-size: 12px;
+    color: #71717a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Green "online" dot with a soft pulse */
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
+    70%  { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Chat area */
+#messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* "Today" line */
+.day-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #a1a1aa;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.day-divider::before,
+.day-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #f0f0f1;
+}
+
+.message {
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.55;
+    animation: fadeUp 0.3s ease-out;     /* new messages slide in gently */
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.text { white-space: pre-wrap; }
+
+/* Bot: light grey bubble */
+.bot {
+    align-self: flex-start;
+    background: #f4f4f5;
+    padding: 10px 14px;
+    border-radius: 18px;
+    border-top-left-radius: 6px;
+}
+
+/* User: black bubble */
+.user {
+    align-self: flex-end;
+    background: linear-gradient(145deg, #27272a, #18181b);
+    color: #fafafa;
+    padding: 10px 14px;
+    border-radius: 18px;
+    border-top-right-radius: 6px;
+    box-shadow: 0 4px 12px rgba(24, 24, 27, 0.15);
+}
+
+/* "ShopEasy" name above bot messages */
+.sender {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #52525b;
+    margin-bottom: 4px;
+}
+
+.mini-logo {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    background: #18181b;
+    color: #fff;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Quick-reply chips */
+#quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 16px 10px;
+}
+
+.quick-reply {
+    font: inherit;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #e4e4e7;
+    background: #ffffff;
+    color: #3f3f46;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.quick-reply:hover {
+    border-color: #a1a1aa;
+    transform: translateY(-1px);                       /* tiny lift */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Input bar */
+#chat-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 12px;
+    padding: 5px 5px 5px 16px;
+    border: 1px solid #e4e4e7;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+#chat-form:focus-within {
+    border-color: #a1a1aa;
+    box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.05);
+}
+
+#message-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    color: #18181b;
+    outline: none;
+}
+#message-input::placeholder { color: #a1a1aa; }
+
+#send-button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(145deg, #3f3f46, #18181b);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+#send-button:hover    { transform: scale(1.06); }
+#send-button:disabled { background: #d4d4d8; cursor: not-allowed; transform: none; }
+
+/* Small note under the input */
+.footer-note {
+    margin: 8px 0 12px;
+    text-align: center;
+    font-size: 11px;
+    color: #a1a1aa;
+}
+
+/* Phones: card fills the screen */
+@media (max-width: 500px) {
+    .chat-container { margin: 0; height: 100vh; max-width: none; border: none; border-radius: 0; }
+}
