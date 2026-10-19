@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='store.css') }}">
+</head>
+<body class="store">
+
+    <!-- ===== Top bar ===== -->
+    <nav class="topbar">
+        <a href="/" class="brand">
+            <span class="logo small">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/>
+                </svg>
+            </span>
+            ShopEasy
+        </a>
+        <div class="nav-links">
+            <a href="#products">Shop</a>
+            <a href="#help">Help</a>
+        </div>
+    </nav>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+        <p class="eyebrow">New season</p>
+        <h1>Everyday gear,<br>made simple.</h1>
+        <p class="hero-text">Simple, useful things for school, work and travel. Questions about an order? Our assistant can help any time.</p>
+        <div class="hero-buttons">
+            <a href="#products" class="btn btn-dark">Shop now</a>
+            <button type="button" class="btn btn-light open-chat">Chat with us</button>
+        </div>
+    </section>
+
+    <!-- ===== Products (filled in by Flask + Jinja) ===== -->
+    <section id="products" class="products">
+        <h2>Products</h2>
+        <div class="product-grid">
+            {% for p in products %}
+            <article class="product-card">
+                <div class="product-image">{{ p.name[0] }}</div>
+                <div class="product-info">
+                    <div class="product-top">
+                        <h3>{{ p.name }}</h3>
+                        <span class="price">${{ "%.2f"|format(p.price) }}</span>
+                    </div>
+                    <p class="description">{{ p.description }}</p>
+                    <div class="product-bottom">
+                        {% if p.stock > 0 %}
+                            <span class="stock in">In stock</span>
+                        {% else %}
+                            <span class="stock out">Out of stock</span>
+                        {% endif %}
+                        <button type="button" class="ask-button" data-product="{{ p.name }}">Ask about this</button>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ===== Help strip ===== -->
+    <section id="help" class="help">
+        <div>
+            <h2>Need help with an order?</h2>
+            <p>Track a package, start a return, or reach a real person. Try order IDs 1001 to 1006.</p>
+        </div>
+        <button type="button" class="btn btn-dark open-chat">Open chat</button>
+    </section>
+
+    <footer class="site-footer">© ShopEasy · A portfolio demo store</footer>
+
+    <!-- ===== Chat bubble button ===== -->
+    <button type="button" id="chat-launcher" aria-label="Open chat">
+        <svg class="icon-chat" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>
+        </svg>
+        <svg class="icon-close" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+    </button>
+
+    <!-- ===== Chat window (same IDs as before, so script.js works as is) ===== -->
+    <div id="chat-widget" class="chat-container" aria-hidden="true">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/>
+                </svg>
+            </div>
+            <div>
+                <h1>ShopEasy</h1>
+                <p><span class="status-dot"></span> Online · A human can also help</p>
+            </div>
+            <button type="button" id="chat-close" aria-label="Close chat">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                    <path d="M6 6l12 12M18 6L6 18"/>
+                </svg>
+            </button>
+        </header>
+
+        <div id="messages">
+            <div class="day-divider"><span>Today</span></div>
+            <div class="message bot">
+                <div class="sender"><span class="mini-logo">S</span> ShopEasy</div>
+                <div class="text">Hi! 👋 I can track orders, find products, start returns, and answer shipping questions.</div>
+            </div>
+        </div>
+
+        <div id="quick-replies">
+            <button type="button" class="quick-reply">Track my order</button>
+            <button type="button" class="quick-reply">What do you sell?</button>
+            <button type="button" class="quick-reply">Return policy</button>
+            <button type="button" class="quick-reply">Shipping cost</button>
+        </div>
+
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Ask a question..." autocomplete="off">
+            <button id="send-button" aria-label="Send">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+                </svg>
+            </button>
+        </form>
+        <p class="footer-note">AI replies may not be perfect · Orders are checked against our records</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='widget.js') }}"></script>
+</body>
+</html>

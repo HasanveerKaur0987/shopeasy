@@ -29,6 +29,18 @@ TESTS = [
      "tool": None, "keywords": ["5-7", "5 to 7", "5–7"]},
     {"question": "What's the capital of France?",
      "tool": None, "keywords": [], "avoid": ["paris"]},
+    {"question": "My order 1002 arrived damaged, the bottle is cracked. My email is ben@example.com",
+    "tool": "create_support_ticket",
+    "keywords": ["t-", "ticket"],
+    "avoid": [],},
+    {"question": "I want to talk to a real person",
+    "tool": None,               # it should ask for the email first
+    "keywords": ["email"],
+    "avoid": ["t-"],},
+    {"question": "Where is order 1003?",
+    "tool": "get_order_status", # it should NOT make a ticket for this
+    "keywords": ["processing", "processed"],
+    "avoid": ["ticket"],},
 ]
 
 

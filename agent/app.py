@@ -4,13 +4,24 @@ from main import ask_agent
 
 app = Flask(__name__)
 
-from db import init_db
+from db import init_db, get_connection
 init_db()
 
-histories = {}     
+histories = {}
 
 @app.route("/")
 def home():
+    # Store page: load the products so Jinja can show one card per product
+    conn = get_connection()
+    rows = conn.execute("SELECT * FROM products").fetchall()
+    conn.close()
+    products = [dict(row) for row in rows]
+    return render_template("store.html", products=products)
+
+
+@app.route("/support")
+def support():
+    # The old full-page chat
     return render_template("index.html")
 
 
