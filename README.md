@@ -2,10 +2,8 @@
 
 An AI support agent for an online store. Customers chat on a web page, and the agent looks up orders, searches products, explains store policies, and processes returns. It uses **OpenAI tool calling**, with all business rules enforced in Python code and data stored in **SQLite**.
 
-> **Status:** Working end to end on a local machine (chat page → Flask → AI agent → database). Deployment coming next.
-
-<!-- After deploying, add: **Live demo:** https://your-app.onrender.com -->
-<!-- Add a screenshot: ![ShopEasy chat](docs/screenshot.png) -->
+**Live demo:** https://shopeasy-ggve.onrender.com
+Hosted on Render's free plan, so the first visit after a quiet period can take about a minute to wake up. Try order IDs 1001 to 1006.
 
 ## What it can do
 
