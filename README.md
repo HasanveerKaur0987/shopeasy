@@ -1,5 +1,7 @@
 # ShopEasy: AI Customer Support Agent
 
+![ShopEasy demo](docs/demo.gif)
+
 An AI support agent for an online store. It tracks orders, finds products, processes returns, and hands hard problems to a human, using **OpenAI tool calling**, **Flask** and **SQLite**.
 
 **Live demo:** https://shopeasy-ggve.onrender.com (free plan, so the first load can take about a minute). Try order IDs 1001 to 1006.
